@@ -131,8 +131,6 @@ aves (calau-de-bico-vermelho, ou "Zazou!", palmito-africano, rolete-de-cauda-lon
       'assets/images/parc/mupa/mupa4.jpg',
       'assets/images/parc/mupa/mupa5.jpg',
       'assets/images/parc/mupa/mupa6.jpg',
-
-
     ],
     especesProtegees: [
       "Palanca negra",
@@ -258,12 +256,12 @@ aves (calau-de-bico-vermelho, ou "Zazou!", palmito-africano, rolete-de-cauda-lon
     superficie: "7 900 km²",
     dateCreation: "1964",
     images: [
-      'assets/images/parc/biscuar/bicuar1.jpg',
-      'assets/images/parc/biscuar/bicuar2.jpg',
-      'assets/images/parc/biscuar/bicuar3.jpg',
+      'assets/images/parc/biscuar/biscuar1.jpg',
+      'assets/images/parc/biscuar/biscuar2.jpg',
+      'assets/images/parc/biscuar/biscuar3.jpg',
       'assets/images/parc/biscuar/bicuar4.jpg',
-      'assets/images/parc/biscuar/bicuar5.jpg',
-      'assets/images/parc/biscuar/bicuar6.jpg',
+      'assets/images/parc/biscuar/biscuar5.jpg',
+      'assets/images/parc/biscuar/biscuar6.png',
     ],
     especesProtegees: [
       "Elefantes",

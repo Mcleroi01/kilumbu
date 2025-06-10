@@ -1,7 +1,13 @@
 import 'dart:ui';
 
 import 'package:Kilumbu/const/appbar.dart';
+import 'package:Kilumbu/const/custom_banner.dart';
+import 'package:Kilumbu/data/heroi_nacionai_data.dart';
+import 'package:Kilumbu/hero/model/heroi_nacional.dart';
+import 'package:Kilumbu/hero/page/hero_nacional_detail_page.dart';
+import 'package:Kilumbu/hero/service/heroi_nacioanal_service.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HeroPage extends StatefulWidget {
   @override
@@ -9,31 +15,14 @@ class HeroPage extends StatefulWidget {
 }
 
 class _HeroPageState extends State<HeroPage> {
-  final List<Map<String, String>> heros = [
-    {
-      'nom': 'Agostinho Neto',
-      'description': 'Premier président de l\'Angola indépendant et figure clé dans la lutte pour l’indépendance.',
-      'image': 'assets/images/heros/agostinho_neto.jpg',
-    },
-    {
-      'nom': 'António Agostinho',
-      'description': 'Militant du MPLA et poète engagé, il a marqué l’histoire du pays par ses idées progressistes.',
-      'image': 'assets/images/heros/antonio_agostinho.jpg',
-    },
-    {
-      'nom': 'Rainha Nzinga',
-      'description': 'Reine du Ndongo et du Matamba, résistante emblématique face à la colonisation portugaise.',
-      'image': 'assets/images/heros/nzinga.jpg',
-    },
-    {
-      'nom': 'Deolinda Rodrigues',
-      'description': 'Figure féminine importante du MPLA, militante pour l’émancipation et la liberté.',
-      'image': 'assets/images/heros/deolinda.jpg',
-    },
-  ];
+  final HeroiNacionalService heroiNacionalService = HeroiNacionalService();
 
   @override
+
   Widget build(BuildContext context) {
+    final isSmall = MediaQuery.of(context).size.width < 600;
+    final List<HeroiNacional> heros = heroiNacionalService.getHeroisNacionais();
+    final List<HeroiNacional> heroisOficiais = heroiNacionalService.getHeroisOficiais();
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Kilumbu',
@@ -42,136 +31,170 @@ class _HeroPageState extends State<HeroPage> {
         onActionPressed: null,
         logoAssetPath: 'assets/images/logo/ao-06.png',
       ),
-      body: SingleChildScrollView(
+      body:SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 🎖️ En-tête
-            Container(
-              height: 200,
-              width: double.infinity,
-              margin: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/heros/heros-cover.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                      child: Container(color: Colors.black.withOpacity(0.3)),
-                    ),
-                    const Center(
-                      child: Text(
-                        'Héros Nacionais de Angola',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 6,
-                              color: Colors.black54,
-                              offset: Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            const CustomBanner(
+              imagePath: 'assets/images/angola.jpg',
+              title: 'Heróis Nacionais de Angola',
+              subtitle: 'Descubra as figuras históricas que marcaram a luta pela independência e o progresso do país.',
             ),
-
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                'L’histoire de l’Angola est marquée par des hommes et des femmes qui ont lutté pour la liberté, l’identité et la souveraineté de leur peuple. Voici quelques figures majeures de cette lutte.',
-                textAlign: TextAlign.justify,
-                style: TextStyle(fontSize: 14, height: 1.6),
-              ),
-            ),
-
             const SizedBox(height: 20),
 
-            // 🧑🏿‍🏫 Liste des héros
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: heros.map((hero) => _buildHeroCard(hero)).toList(),
-              ),
+            Text(
+              'Herói Nacional Reconhecido Oficialmente',
+              style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold),
             ),
 
-            const SizedBox(height: 32),
+            const SizedBox(height: 10),
+
+            Text(
+              "A lista oficial dos heróis nacionais angolanos reconhecidos pelo Estado é limitada, sendo António Agostinho Neto o único oficialmente declarado como tal.",
+              style: GoogleFonts.poppins(
+                fontSize: 12,
+                color: Colors.grey,
+                height: 1.5,
+              ),
+              textAlign: TextAlign.justify,
+            ),
+
+            const SizedBox(height: 16),
+
+            if (heroisOficiais.length == 1)
+              _themeCard(
+                context,
+                heroisOficiais[0].nome,
+                heroisOficiais[0].imageUrl,
+                HeroNacionalDetailPage(id: heroisOficiais[0].id),
+              )
+            else
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: heroisOficiais.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: isSmall ? 2 : 4,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 0.75,
+                ),
+                itemBuilder: (context, index) {
+                  final hero = heroisOficiais[index];
+                  return _themeCard(
+                    context,
+                    hero.nome,
+                    hero.imageUrl,
+                    HeroNacionalDetailPage(id: hero.id),
+                  );
+                },
+              ),
+
+
+            const SizedBox(height: 30),
+
+            Text(
+              'Outras Figuras Reverenciadas',
+              style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+
+            const SizedBox(height: 10),
+
+            Text(
+              "Embora não oficialmente declarados heróis nacionais, diversas personalidades são amplamente reconhecidas por suas contribuições para a luta de libertação, paz e desenvolvimento de Angola.",
+              style: GoogleFonts.poppins(
+                fontSize: 12,
+                color: Colors.grey,
+                height: 1.5,
+              ),
+              textAlign: TextAlign.justify,
+            ),
+
+            const SizedBox(height: 16),
+            // 🧑‍🏫 Liste des Présidents en grille
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: heros.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: isSmall ? 2 : 4,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+                childAspectRatio: 0.75,
+              ),
+              itemBuilder: (context, index) {
+                final hero = heros[index];
+                return _themeCard(
+                  context,
+                  hero.nome,
+                  hero.imageUrl,
+                  HeroNacionalDetailPage(id: hero.id),
+                );
+              },
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildHeroCard(Map<String, String> hero) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: Colors.white,
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 4,
-            offset: Offset(1, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          // 📷 Image du héros
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(12),
-              bottomLeft: Radius.circular(12),
-            ),
-            child: Image.asset(
-              hero['image']!,
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(width: 12),
-
-          // 📃 Description
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    hero['nom']!,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    hero['description']!,
-                    style: const TextStyle(fontSize: 12),
-                    textAlign: TextAlign.justify,
-                  ),
-                ],
+  Widget _themeCard(BuildContext context, String title, String imagePath, Widget destinationPage, {double? width}) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => destinationPage),
+        );
+      },
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        width: width ?? double.infinity,
+        height: 260,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Stack(
+            children: [
+              Image.asset(
+                imagePath,
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.cover,
               ),
-            ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.black.withOpacity(0.6), Colors.transparent],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 8,
+                left: 8,
+                right: 8,
+                child: Text(
+                  title,
+                  style:  GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 4,
+                        color: Colors.black54,
+                        offset: Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
+
 }

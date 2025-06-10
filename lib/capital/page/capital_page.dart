@@ -1,5 +1,6 @@
 import 'dart:ui';
-
+import 'package:Kilumbu/const/bottom_floating_button.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:Kilumbu/const/appbar.dart';
 import 'package:flutter/material.dart';
 
@@ -11,127 +12,302 @@ class CapitalPage extends StatefulWidget {
 class _CapitalPageState extends State<CapitalPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'Kilumbu',
-        subtitle: 'Explore a Cultura Angolana',
-        actionIcon: Icons.info_outline,
-        onActionPressed: null,
-        logoAssetPath: 'assets/images/logo/ao-06.png',
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // 🖼 Image en-tête avec flou et titre
-            Container(
-              height: 300,
-              width: double.infinity,
-
-              decoration: BoxDecoration(
-
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/capital.jpg'), // Remplace avec une image de Luanda
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 1, sigmaY: 6),
-                      child: Container(color: Colors.black.withOpacity(0.3)),
-                    ),
-                    const Center(
-                      child: Text(
-                        'Luanda',
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 6,
-                              color: Colors.black54,
-                              offset: Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            // 📝 Description de Luanda
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  '''
+    final String luandaDescription ='''
 Luanda é a capital e a maior cidade de Angola. Localizada na costa atlântica do país, Luanda é um importante centro político, econômico e cultural. Fundada pelos portugueses em 1576, é uma cidade histórica com uma mistura vibrante de arquitetura colonial e moderna.
 
 A cidade abriga instituições governamentais, museus, universidades e uma das economias urbanas mais dinâmicas de África. O seu porto é um dos mais movimentados da região e desempenha um papel essencial no comércio angolano.
 
 Luanda é também conhecida pela sua baía deslumbrante, praias como a Ilha do Mussulo, e uma vida cultural rica, incluindo música kizomba e semba, moda e gastronomia.
-                ''',
-                  style: const TextStyle(fontSize: 14, height: 1.6),
-                  textAlign: TextAlign.justify,
+                ''';
+    return Scaffold(
+
+      body: Stack(
+        children: [
+          // 🌁 Image de fond
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/capital.jpg',
+              fit: BoxFit.cover,
+            ),
+          ),
+          // Effet flou
+          Positioned.fill(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+              child: Container(color: Colors.black.withOpacity(0.3)),
+            ),
+          ),
+
+          // 📜 Contenu scrollable
+          CustomScrollView(
+            slivers: [
+              // 🔽 AppBar flexible
+              SliverAppBar(
+                expandedHeight: 380,
+                pinned: true,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                leading: const BackButton(color: Colors.white),
+                title: Text(
+                  'Luanda',
+                  style:  GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    shadows: [Shadow(blurRadius: 6, color: Colors.black45)],
+                  ),
+                ),
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Image.asset(
+                        'assets/images/capital.jpg',
+                        fit: BoxFit.cover,
+                      ),
+                      Container(color: Colors.black.withOpacity(0.3)),
+                    ],
+                  ),
                 ),
               ),
-            ),
 
-            const SizedBox(height: 20),
+              SliverToBoxAdapter(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                  ),
+                  padding: const EdgeInsets.all(20),
+                  child: DefaultTabController(
+                    length: 3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Titre
+                        Text(
+                          'Luanda',
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                          ),
+                        ),
+                        Text(
+                          'Costa oeste de Angola, banhada pelo Oceano Atlântico',
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
 
-            // 📌 Informations clés
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: const [
-                  InfoRow(label: '📍 Localização', value: 'Litoral atlântico'),
-                  InfoRow(label: '👥 População', value: 'Mais de 8 milhões'),
-                  InfoRow(label: '🕰 Fundada', value: '1576'),
-                  InfoRow(label: '🌍 Importância', value: 'Capital política e econômica'),
-                ],
+                        // Infos principales
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _infoTile(Icons.date_range_outlined, "Fundação", '1576'),
+                            _infoTile(Icons.area_chart, "Área", '116 km²'),
+                            _infoTile(Icons.thermostat, "Clima", 'Tropical seco'),
+
+                          ],
+                        ),
+
+                        const SizedBox(height: 24),
+
+                        // Onglets
+                        TabBar(
+                          labelColor: const Color(0xFFDD1C1A),
+                          unselectedLabelColor: Colors.grey,
+                          indicatorColor: const Color(0xFFDD1C1A),
+                          labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+                          tabs: const [
+                            Tab(text: "Visão geral"),
+                            Tab(text: "Detalhes"),
+                            Tab(text: "Locais a Visitar"),
+
+                          ],
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        SizedBox(
+                          height: 600,
+                          child: TabBarView(
+                            children: [
+                              // 🧾 Aperçu
+                              SingleChildScrollView(
+                                padding: const EdgeInsets.all(16),
+                                child: Text(luandaDescription
+                                  ,
+                                  style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w200,
+                                    fontSize: 13,
+                                    color: Colors.grey,
+                                    height: 1.4,
+                                  ),
+                                ),
+                              ),
+
+                              // 🧩 Détails
+                              SingleChildScrollView(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // 🌄 Image principale
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(12),
+                                      child: Image.asset(
+                                        'assets/images/capital.jpg' ,
+                                        width: double.infinity,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16),
+
+
+
+                                    // Autres contenus si besoin
+                                    const SizedBox(height: 24),
+                                    // 📋 Informations en Card
+                                    _infoCard("📍 Localização", 'Costa oeste de Angola, banhada pelo Oceano Atlântico'),
+                                    _infoCard("📅 Data de Fundação", '25 de janeiro de 1576'),
+                                    _infoCard("🌐 Superfície", '116 km²'),
+                                    _infoCard("☀️ Clima", 'Tropical seco (com pouca chuva entre maio e setembro)'),
+                                    _infoCard("🎯 Atividades", 'Turismo histórico, vida noturna, praias, compras'),
+                                    _infoCard("🧭 Acesso", 'Através do Aeroporto Internacional 4 de Fevereiro e estradas principais'),
+                                    _infoCard("📝 Conselhos", 'Evitar circular em áreas isoladas à noite; hidratar-se bem no calor'),
+
+
+                                  ],
+                                ),
+                              ),
+
+                              // 📸 Locais a Visitar
+                              SingleChildScrollView(
+                                padding: const EdgeInsets.all(16),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("📸 Galeria", style: Theme.of(context).textTheme.titleMedium),
+                                    const SizedBox(height: 12),
+
+                                    // 🌄 Galerie horizontale
+                                    SizedBox(
+                                      height: 160,
+                                      child: ListView(
+                                        scrollDirection: Axis.horizontal,
+                                        children: [
+                                          _placeImage("assets/images/fortaleza.jpg"),
+                                          _placeImage("assets/images/ilha.jpeg"),
+                                          _placeImage("assets/images/musseque.jpg"),
+                                          _placeImage("assets/images/miradouro.jpg"),
+                                        ],
+                                      ),
+                                    ),
+
+                                    const SizedBox(height: 24),
+                                    Text("📍 Lugares Imperdíveis", style: Theme.of(context).textTheme.titleMedium),
+                                    const SizedBox(height: 12),
+
+                                    _placeTile("Fortaleza de São Miguel", "Construída em 1576 com vista para a baía"),
+                                    _placeTile("Ilha do Cabo", "Praias, bares e vida noturna à beira-mar"),
+                                    _placeTile("Museu Nacional de Antropologia", "História e cultura de Angola"),
+                                    _placeTile("Miradouro da Lua", "Paisagem geológica única a poucos km de Luanda"),
+                                  ],
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+
+
+                        const SizedBox(height: 100),
+
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            ),
 
-            const SizedBox(height: 32),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// 🔹 Widget pour ligne d'information
-class InfoRow extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const InfoRow({required this.label, required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        children: [
-          Text(
-            label,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            ],
           ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(value),
-          ),
+
+          BottomFloatingButton(onPressed: _action)
         ],
       ),
     );
   }
+
+  Widget _placeImage(String path) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 12),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: Image.asset(
+          path,
+          width: 200,
+          height: 160,
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  Widget _placeTile(String title, String subtitle) {
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(vertical: 4),
+      leading: const Icon(Icons.place_outlined, color: Colors.redAccent),
+      title: Text(title, style:  GoogleFonts.poppins(fontWeight: FontWeight.bold)),
+      subtitle: Text(subtitle),
+    );
+  }
+
+  Widget _infoTile(IconData icon, String label, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          height: 30,
+          width: 30,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Icon(icon, color: const Color(0xFFDD1C1A), size: 22),
+        ),
+        const SizedBox(height: 4),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(label, style:  GoogleFonts.poppins(fontSize: 10, color: Colors.grey)),
+            Text(value, style:  GoogleFonts.poppins(fontWeight: FontWeight.bold)),
+          ],
+        ),
+        const SizedBox(width: 4),
+
+      ],
+    );
+  }
+
+  Widget _infoCard(String title, String value) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 10),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: ListTile(
+        title: Text(title, style:  GoogleFonts.poppins(fontWeight: FontWeight.bold)),
+        subtitle: Text(value),
+      ),
+    );
+  }
+
+  _action(){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>  CapitalPage()),
+    );
+  }
 }
+

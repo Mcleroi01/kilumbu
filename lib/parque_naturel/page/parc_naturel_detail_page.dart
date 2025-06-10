@@ -1,9 +1,11 @@
 import 'dart:ui';
+import 'package:Kilumbu/const/bottom_floating_button.dart';
+import 'package:Kilumbu/const/info_tile.dart';
 import 'package:Kilumbu/parque_naturel/model/parcnaturel.dart';
 import 'package:Kilumbu/parque_naturel/service/parc_naturel_service.dart';
 import 'package:flutter/material.dart';
-import 'package:Kilumbu/province/model/province.dart';
-import 'package:Kilumbu/province/service/province_service.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class ParcNaturelDetailPage extends StatelessWidget {
   final int id;
@@ -45,7 +47,7 @@ class ParcNaturelDetailPage extends StatelessWidget {
                 leading: const BackButton(color: Colors.white),
                 title: Text(
                   parcNaturel.nom,
-                  style: const TextStyle(
+                  style:  GoogleFonts.poppins(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     shadows: [Shadow(blurRadius: 6, color: Colors.black45)],
@@ -80,14 +82,14 @@ class ParcNaturelDetailPage extends StatelessWidget {
                         // Titre
                         Text(
                           parcNaturel.nom,
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          style: GoogleFonts.poppins(
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
                           ),
                         ),
                         Text(
                           parcNaturel.localisation,
-                          style: const TextStyle(
+                          style: GoogleFonts.poppins(
                             fontWeight: FontWeight.normal,
                             fontSize: 16,
                             color: Colors.grey,
@@ -99,9 +101,9 @@ class ParcNaturelDetailPage extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _infoTile(Icons.date_range_outlined, "Criação", parcNaturel.dateCreation),
-                            _infoTile(Icons.area_chart, "Área", parcNaturel.superficie),
-                            _infoTile(Icons.thermostat, "Climat", parcNaturel.climat),
+                            InfoTile(icon:Icons.date_range_outlined, label: "Criação", value:parcNaturel.dateCreation),
+                            InfoTile(icon:Icons.area_chart, label:"Área", value:parcNaturel.superficie),
+                            InfoTile(icon:Icons.thermostat,label: "Climat", value:parcNaturel.climat),
                           ],
                         ),
 
@@ -114,9 +116,9 @@ class ParcNaturelDetailPage extends StatelessWidget {
                           indicatorColor: const Color(0xFFDD1C1A),
                           labelStyle: const TextStyle(fontWeight: FontWeight.bold),
                           tabs: const [
-                            Tab(text: "Aperçu"),
-                            Tab(text: "Détail"),
-                            Tab(text: "Avis"),
+                            Tab(text: "Visão geral"),
+                            Tab(text: "Detalhes"),
+                            Tab(text: "Locais a Visitar"),
                           ],
                         ),
 
@@ -131,8 +133,8 @@ class ParcNaturelDetailPage extends StatelessWidget {
                                 padding: const EdgeInsets.all(16),
                                 child: Text(
                                   parcNaturel.description,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w100,
+                                  style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w200,
                                     fontSize: 13,
                                     color: Colors.grey,
                                     height: 1.4,
@@ -216,107 +218,21 @@ class ParcNaturelDetailPage extends StatelessWidget {
             ],
           ),
 
-          // 🔘 Bouton flottant bas
-          Positioned(
-            bottom: 24,
-            left: 20,
-            right: 20,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(24),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 10,
-                    color: Colors.black.withOpacity(0.1),
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Explorar agora",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFDD1C1A),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    child: const Text("Para começar", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          BottomFloatingButton(onPressed: _onPressed),
+
+
         ],
       ),
     );
   }
 
-  /// Affiche les infos capitale, superficie, climat, etc.
-  Widget _infoTile(IconData icon, String label, String value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          height: 30,
-          width: 30,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade200,
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Icon(icon, color: const Color(0xFFDD1C1A), size: 22),
-        ),
-        const SizedBox(height: 4),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(label, style: const TextStyle(fontSize: 10, color: Colors.grey)),
-            Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
-          ],
-        ),
-        const SizedBox(width: 4),
 
-      ],
-    );
-  }
-
-  /// Formate le texte en paragraphes stylisés
-  List<InlineSpan> _buildArticleParagraphs(String text) {
-    final paragraphs = text.trim().split('\n\n');
-
-    return paragraphs.map((paragraph) {
-      final firstLetter = paragraph.substring(0, 1);
-      final rest = paragraph.substring(1);
-      return TextSpan(
-        children: [
-          WidgetSpan(child: SizedBox(height: 16)),
-          TextSpan(
-            text: firstLetter,
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              height: 1.5,
-            ),
-          ),
-          TextSpan(text: rest + '\n\n'),
-        ],
-      );
-    }).toList();
-  }
   Widget _infoCard(String title, String value) {
     return Card(
       margin: const EdgeInsets.only(bottom: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(title, style:  GoogleFonts.poppins(fontWeight: FontWeight.bold)),
         subtitle: Text(value),
       ),
     );

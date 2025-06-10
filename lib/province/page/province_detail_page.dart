@@ -1,7 +1,10 @@
 import 'dart:ui';
+import 'package:Kilumbu/const/bottom_floating_button.dart';
+import 'package:Kilumbu/const/info_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:Kilumbu/province/model/province.dart';
 import 'package:Kilumbu/province/service/province_service.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ProvinceDetailsPage extends StatelessWidget {
   final int id;
@@ -43,7 +46,7 @@ class ProvinceDetailsPage extends StatelessWidget {
                 leading: const BackButton(color: Colors.white),
                 title: Text(
                   province.nom,
-                  style: const TextStyle(
+                  style:  GoogleFonts.poppins(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     shadows: [Shadow(blurRadius: 6, color: Colors.black45)],
@@ -78,14 +81,14 @@ class ProvinceDetailsPage extends StatelessWidget {
                         // Titre
                         Text(
                           province.nom,
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          style: GoogleFonts.poppins(
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
                           ),
                         ),
                         Text(
                           province.capitale,
-                          style: const TextStyle(
+                          style:  GoogleFonts.poppins(
                             fontWeight: FontWeight.normal,
                             fontSize: 16,
                             color: Colors.grey,
@@ -97,9 +100,9 @@ class ProvinceDetailsPage extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _infoTile(Icons.location_city, "Capitale", province.capitale),
-                            _infoTile(Icons.area_chart, "Superficie", province.superficie),
-                            _infoTile(Icons.thermostat, "Climat", province.climat),
+                            InfoTile(icon:Icons.location_city, label: "Capitale", value:province.capitale),
+                            InfoTile(icon:Icons.area_chart, label:"Superficie", value:province.superficie),
+                            InfoTile(icon:Icons.thermostat,label: "Climat", value:province.climat),
                           ],
                         ),
 
@@ -110,10 +113,10 @@ class ProvinceDetailsPage extends StatelessWidget {
                           labelColor: const Color(0xFFDD1C1A),
                           unselectedLabelColor: Colors.grey,
                           indicatorColor: const Color(0xFFDD1C1A),
-                          labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+                          labelStyle:  GoogleFonts.poppins(fontWeight: FontWeight.bold),
                           tabs: const [
-                            Tab(text: "Aperçu"),
-                            Tab(text: "Détail"),
+                            Tab(text: "Visão geral"),
+                            Tab(text: "Detalhes"),
                             Tab(text: "Avis"),
                           ],
                         ),
@@ -128,8 +131,8 @@ class ProvinceDetailsPage extends StatelessWidget {
                               // Aperçu
                               Text(
                                 province.description,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w100,
+                                style:  GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w200,
                                   fontSize: 13,
                                   color: Colors.grey,
                                   height: 1.4,
@@ -137,74 +140,59 @@ class ProvinceDetailsPage extends StatelessWidget {
                               ),
 
                               // Détail
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text("Carte", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                                  const SizedBox(height: 12),
-                                  if (province.mapPath is List<String>)
-                                    SizedBox(
-                                      height: 120,
-                                      child: ListView(
-                                        scrollDirection: Axis.horizontal,
-                                        children: (province.mapPath as List<String>).map((path) {
-                                          return Padding(
-                                            padding: const EdgeInsets.only(right: 8),
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(12),
-                                              child: Image.asset(
-                                                path,
-                                                width: 150,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          );
-                                        }).toList(),
-                                      ),
-                                    )
-                                  else
+                              // 🧩 Détails
+                              SingleChildScrollView(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // 🌄 Image principale
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(12),
                                       child: Image.asset(
-                                        province.mapPath.toString(),
-                                        height: 120,
+                                        province.imagePath,
                                         width: double.infinity,
+                                        height: 200,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
-                                ],
+                                    const SizedBox(height: 16),
+
+                                    // 🖼️ Galerie
+                                    if (province.photos.isNotEmpty)
+                                      SizedBox(
+                                        height: 120,
+                                        child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: province.photos.length,
+                                          itemBuilder: (context, index) {
+                                            return Padding(
+                                              padding: const EdgeInsets.only(right: 8),
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(12),
+                                                child: Image.asset(
+                                                  province.photos[index],
+                                                  width: 150,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+
+                                    // Autres contenus si besoin
+                                    const SizedBox(height: 24),
+                                    // 📋 Informations en Card
+
+
+                                  ],
+                                ),
                               ),
 
                               // Avis
                               const Center(child: Text("Aucun avis pour le moment.")),
                             ],
-                          ),
-                        ),
-
-                        const SizedBox(height: 16),
-
-                        // Photos
-                        const Text("Photos", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                        const SizedBox(height: 12),
-                        SizedBox(
-                          height: 100,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: province.photos.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Image.asset(
-                                    province.photos[index],
-                                    width: 120,
-                                    height: 100,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              );
-                            },
                           ),
                         ),
 
@@ -218,103 +206,12 @@ class ProvinceDetailsPage extends StatelessWidget {
             ],
           ),
 
-          // 🔘 Bouton flottant bas
-          Positioned(
-            bottom: 24,
-            left: 20,
-            right: 20,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(24),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 10,
-                    color: Colors.black.withOpacity(0.1),
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Explorer maintenant",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFDD1C1A),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    child: const Text("Commencer", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          BottomFloatingButton(onPressed: _onPressed)
         ],
       ),
     );
   }
 
-  /// Affiche les infos capitale, superficie, climat, etc.
-  Widget _infoTile(IconData icon, String label, String value) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          height: 30,
-          width: 30,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade200,
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Icon(icon, color: const Color(0xFFDD1C1A), size: 22),
-        ),
-        const SizedBox(height: 4),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(label, style: const TextStyle(fontSize: 10, color: Colors.grey)),
-            Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
-          ],
-        ),
-        const SizedBox(width: 4),
+  _onPressed(){}
 
-      ],
-    );
-  }
-
-  /// Formate le texte en paragraphes stylisés
-  List<InlineSpan> _buildArticleParagraphs(String text) {
-    final paragraphs = text.trim().split('\n\n');
-
-    return paragraphs.map((paragraph) {
-      final firstLetter = paragraph.substring(0, 1);
-      final rest = paragraph.substring(1);
-      return TextSpan(
-        children: [
-          WidgetSpan(child: SizedBox(height: 16)),
-          TextSpan(
-            text: firstLetter,
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              height: 1.5,
-            ),
-          ),
-          TextSpan(text: rest + '\n\n'),
-        ],
-      );
-    }).toList();
-  }
-
-  _onPressed(){
-    return null;
-  }
 }

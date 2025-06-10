@@ -4,6 +4,7 @@ import 'package:Kilumbu/const/appbar.dart';
 import 'package:Kilumbu/data/president_data.dart';
 import 'package:Kilumbu/president/model/president.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PresidentDetailPage extends StatelessWidget {
   final int id;
@@ -45,7 +46,7 @@ class PresidentDetailPage extends StatelessWidget {
                 leading: const BackButton(color: Colors.white),
                 title: Text(
                   president.nom,
-                  style: const TextStyle(
+                  style:  GoogleFonts.poppins(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     shadows: [Shadow(blurRadius: 6, color: Colors.black45)],
@@ -80,14 +81,14 @@ class PresidentDetailPage extends StatelessWidget {
                         // Titre
                         Text(
                           president.nom,
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          style: GoogleFonts.poppins(
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
                           ),
                         ),
                         Text(
                           president.profissao,
-                          style: const TextStyle(
+                          style:  GoogleFonts.poppins(
                             fontWeight: FontWeight.normal,
                             fontSize: 16,
                             color: Colors.grey,
@@ -103,8 +104,8 @@ class PresidentDetailPage extends StatelessWidget {
                           indicatorColor: const Color(0xFFDD1C1A),
                           labelStyle: const TextStyle(fontWeight: FontWeight.bold),
                           tabs: const [
-                            Tab(text: "Aperçu"),
-                            Tab(text: "Détail"),
+                            Tab(text: "Visão geral"),
+                            Tab(text: "Detalhes"),
                             Tab(text: "Avis"),
                           ],
                         ),
@@ -119,8 +120,8 @@ class PresidentDetailPage extends StatelessWidget {
                               // Aperçu
                               Text(
                                 president.description,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w100,
+                                style:  GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w200,
                                   fontSize: 13,
                                   color: Colors.grey,
                                   height: 1.4,
@@ -191,23 +192,38 @@ class PresidentDetailPage extends StatelessWidget {
 
   Widget _buildInfoRow(IconData icon, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 20, color: Colors.grey),
-          const SizedBox(width: 10),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade100,
+              shape: BoxShape.circle,
+            ),
+            padding: const EdgeInsets.all(6),
+            child: Icon(
+              icon,
+              size: 18,
+              color: Colors.blueGrey,
+            ),
+          ),
+          const SizedBox(width: 12),
           Expanded(
             child: Text(
               value,
-              style: const TextStyle(fontWeight: FontWeight.w100,
-                fontSize: 13,
-                color: Colors.grey,
-                height: 1.4,),
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: Colors.black87,
+                height: 1.5,
+              ),
             ),
           ),
         ],
       ),
     );
   }
+
 
 }

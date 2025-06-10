@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:Kilumbu/capital/page/capital_page.dart';
 import 'package:Kilumbu/const/appbar.dart';
+import 'package:Kilumbu/const/custom_banner.dart';
 import 'package:Kilumbu/hero/page/hero_page.dart';
 import 'package:Kilumbu/hymne_national/page/hymne_national.dart';
 import 'package:Kilumbu/langue/page/langue_page.dart';
@@ -10,6 +11,7 @@ import 'package:Kilumbu/president/model/president.dart';
 import 'package:Kilumbu/president/page/president_detail_page.dart';
 import 'package:Kilumbu/president/service/president_service.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PresidentPage extends StatefulWidget{
   @override
@@ -38,46 +40,10 @@ class _PresidentPage extends State<PresidentPage>{
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 🔝 Bannière
-            Container(
-              height: 180,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/angola.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-                      child: Container(color: Colors.black.withOpacity(0.3)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text(
-                            'Presidentes de Angola',
-                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-                          ),
-                          SizedBox(height: 6),
-                          Text(
-                            'Descubra os líderes históricos que moldaram o país.',
-                            style: TextStyle(fontSize: 14, color: Colors.white70),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            const CustomBanner(
+              imagePath: 'assets/images/angola.jpg',
+              title: 'Presidentes de Angola',
+              subtitle: 'Descubra os líderes históricos que moldaram o país.',
             ),
 
             const SizedBox(height: 20),
@@ -144,7 +110,7 @@ class _PresidentPage extends State<PresidentPage>{
               right: 8,
               child: Text(
                 title,
-                style: const TextStyle(
+                style:  GoogleFonts.poppins(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 14,

@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:Kilumbu/const/appbar.dart';
+import 'package:Kilumbu/const/custom_banner.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:flutter/services.dart';
 
@@ -41,57 +43,16 @@ class _HymneNationalPage extends State<HymneNationalPage> {
         logoAssetPath: 'assets/images/logo/ao-06.png',
       ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 🖼 Image en-tête avec flou et texte
-            Container(
-              height: 180,
-              width: double.infinity,
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/angola.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-                      child: Container(color: Colors.black.withOpacity(0.3)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text(
-                            'Angola Avante',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(height: 6),
-                          Text(
-                            'Adoptado em 1975, após a independência de Portugal.',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.white70,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+
+
+            const CustomBanner(
+              imagePath: 'assets/images/angola.jpg',
+              title: 'Angola Avante',
+              subtitle: 'Antes da independência, a canção "Angola é Nossa" era utilizada, principalmente pelos portugueses em Angola, como um hino colonial não oficial, mas após o início das negociações de independência já não estava mais em uso.',
             ),
 
             const SizedBox(height: 8),
@@ -129,7 +90,7 @@ Marchando para a vitória final.
 Pátria unida, liberdade,
 Um só povo, uma só nação!
                 ''',
-                    style: const TextStyle(fontSize: 14, height: 1.6),
+                    style:  GoogleFonts.poppins(fontSize: 14, height: 1.6),
                     textAlign: TextAlign.justify,
                   ),
                 ],
@@ -146,8 +107,8 @@ Um só povo, uma só nação!
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: _toggleAudio,
-                      icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
-                      label: Text(isPlaying ? 'Pause' : 'Ovir l\'Hino'),
+                      icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow,color: Colors.white,),
+                      label: Text(isPlaying ? 'Pause' : 'Ovir l\'Hino',style: GoogleFonts.poppins(color: Colors.white),),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.redAccent,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -158,8 +119,8 @@ Um só povo, uma só nação!
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: _openPdf,
-                      icon: const Icon(Icons.picture_as_pdf),
-                      label: const Text('Bachar PDF'),
+                      icon: const Icon(Icons.picture_as_pdf,color: Colors.black,),
+                      label:  Text('Bachar PDF',style: GoogleFonts.poppins(color:Colors.black ),),
                       style: OutlinedButton.styleFrom(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       ),
@@ -172,13 +133,13 @@ Um só povo, uma só nação!
             const SizedBox(height: 20),
 
             // ✍️ Auteurs
-            const Padding(
+             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   '✍️ Letra: Manuel Rui Monteiro\n🎵 Música: Rui Mingas',
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     fontStyle: FontStyle.italic,
                     color: Colors.black87,
                     fontSize: 13,

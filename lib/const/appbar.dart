@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -36,9 +37,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title,
-                    style: const TextStyle(
+                    style:  GoogleFonts.poppins(
                         fontSize: 18, fontWeight: FontWeight.bold)),
-                Text(subtitle!, style: const TextStyle(fontSize: 12)),
+                Text(subtitle!, style:  GoogleFonts.poppins(fontSize: 12)),
               ],
             ),
         ],

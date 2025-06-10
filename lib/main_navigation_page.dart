@@ -1,4 +1,5 @@
 import 'package:Kilumbu/home.dart';
+import 'package:Kilumbu/mais/page/maispage.dart';
 import 'package:Kilumbu/musica/page/musica_page.dart';
 import 'package:Kilumbu/president/page/president_page.dart';
 import 'package:Kilumbu/province/page/provinces_page.dart';
@@ -26,7 +27,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
       case 2:
         return  PresidentPage();
       case 3:
-        return  PresidentPage();
+        return  MaisPage();
     // Ajoute ici d'autres pages plus tard
       default:
         return const HomePage();

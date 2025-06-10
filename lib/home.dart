@@ -10,10 +10,9 @@ import 'package:Kilumbu/langue/page/langue_page.dart';
 import 'package:Kilumbu/musica/page/musica_page.dart';
 import 'package:Kilumbu/parque_naturel/page/parque_naturel.dart';
 import 'package:flutter/material.dart';
-import 'package:Kilumbu/const/appbar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:Kilumbu/const/bottombar.dart';
 import 'package:Kilumbu/province/page/provinces_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -47,7 +46,7 @@ class _HomePageState extends State<HomePage> {
             Stack(
               children: [
                 Container(
-                  height: isSmall ? 160 : 200,
+
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     image: const DecorationImage(
@@ -82,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 Text(
                                   'Bem-vindo ao Kilumbu 🇦🇴',
-                                  style: TextStyle(
+                                  style: GoogleFonts.poppins(
                                     fontSize: isSmall ? 18 : 22,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
@@ -91,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                                 const SizedBox(height: 8),
                                 Text(
                                   'Descubra a história, a cultura e os heróis da nossa nação.',
-                                  style: TextStyle(
+                                  style: GoogleFonts.poppins(
                                     fontSize: isSmall ? 13 : 15,
                                     color: Colors.white70,
                                   ),
@@ -141,9 +140,9 @@ class _HomePageState extends State<HomePage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                 Text(
                   'Temas em Destaque',
-                  style: TextStyle(
+                  style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
@@ -198,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                           BlendMode.darken,
                         ),
                         child: Image.asset(
-                          'assets/images/logo/ao-06.png',
+                          'assets/images/angola.jpg',
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -208,9 +207,9 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                           Text(
                             '🇦🇴 Angola em Destaque',
-                            style: TextStyle(
+                            style: GoogleFonts.poppins(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -222,12 +221,12 @@ class _HomePageState extends State<HomePage> {
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    Text('• Capital: Luanda', style: TextStyle(color: Colors.white)),
-                                    Text('• Superfície: 1.246.700 km²', style: TextStyle(color: Colors.white)),
-                                    Text('• População: ~33 milhões', style: TextStyle(color: Colors.white)),
-                                    Text('• Língua oficial: Português', style: TextStyle(color: Colors.white)),
-                                    Text('• Moeda: Kwanza (AOA)', style: TextStyle(color: Colors.white)),
+                                  children:  [
+                                    Text('• Capital: Luanda', style: GoogleFonts.poppins(color: Colors.white)),
+                                    Text('• Superfície: 1.246.700 km²', style: GoogleFonts.poppins(color: Colors.white)),
+                                    Text('• População: ~33 milhões', style: GoogleFonts.poppins(color: Colors.white)),
+                                    Text('• Língua oficial: Português', style: GoogleFonts.poppins(color: Colors.white)),
+                                    Text('• Moeda: Kwanza (AOA)', style: GoogleFonts.poppins(color: Colors.white)),
                                   ],
                                 ),
                               ),
@@ -235,12 +234,12 @@ class _HomePageState extends State<HomePage> {
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    Text('• Indépendance: 11 nov. 1975', style: TextStyle(color: Colors.white)),
-                                    Text('• Président: João Lourenço', style: TextStyle(color: Colors.white)),
-                                    Text('• Hymne: Angola Avante', style: TextStyle(color: Colors.white)),
-                                    Text('• Drapeau: 🇦🇴', style: TextStyle(color: Colors.white)),
-                                    Text('• Devise: Unidade e Progresso', style: TextStyle(color: Colors.white)),
+                                  children:  [
+                                    Text('• Indépendance: 11 nov. 1975', style: GoogleFonts.poppins(color: Colors.white)),
+                                    Text('• Président: João Lourenço', style: GoogleFonts.poppins(color: Colors.white)),
+                                    Text('• Hymne: Angola Avante', style: GoogleFonts.poppins(color: Colors.white)),
+                                    Text('• Drapeau: 🇦🇴', style: GoogleFonts.poppins(color: Colors.white)),
+                                    Text('• Devise: Unidade e Progresso', style: GoogleFonts.poppins(color: Colors.white)),
                                   ],
                                 ),
                               ),
@@ -292,7 +291,7 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(width: 6),
             Text(
               label,
-              style: const TextStyle(
+              style:  GoogleFonts.poppins(
                 fontSize: 12,
                 color: Color(0xFF000000),
               ),
@@ -338,7 +337,7 @@ class _HomePageState extends State<HomePage> {
               right: 8,
               child: Text(
                 title,
-                style: const TextStyle(
+                style:  GoogleFonts.poppins(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
@@ -400,7 +399,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               Text(
                 '"${adage['quote']}"',
-                style: const TextStyle(
+                style:  GoogleFonts.poppins(
                   fontSize: 20,
                   color: Color(0xFF000000),
                   fontStyle: FontStyle.italic,
@@ -409,7 +408,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 12),
               Text(
                 '- ${adage['author']}',
-                style: const TextStyle(
+                style:  GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w100,
                   color: Color(0xFF000000),
