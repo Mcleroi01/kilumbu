@@ -37,7 +37,7 @@ class _HymneNationalPage extends State<HymneNationalPage> {
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Kilumbu',
-        subtitle: 'Explore a Cultura Angolana',
+        subtitle: 'Angola Avante',
         actionIcon: Icons.help_outline,
         onActionPressed: null,
         logoAssetPath: 'assets/images/logo/ao-06.png',

@@ -25,7 +25,7 @@ class _ProvincesPageState extends State<ProvincesPage> {
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Kilumbu',
-        subtitle: 'Explore a Cultura Angolana',
+        subtitle: 'Províncias',
         actionIcon: Icons.help_outline,
         onActionPressed: null,
         logoAssetPath: 'assets/images/logo/ao-06.png',

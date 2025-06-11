@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:Kilumbu/Feriados/page/Feriados_page.dart';
 import 'package:Kilumbu/capital/page/capital_page.dart';
 import 'package:Kilumbu/const/appbar.dart';
+import 'package:Kilumbu/const/custom_banner.dart';
 import 'package:Kilumbu/cozinha/page/cozinha_page.dart';
 import 'package:Kilumbu/hero/page/hero_page.dart';
 import 'package:Kilumbu/histoire/page/histoire_page.dart';
@@ -42,79 +43,14 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // 🎉 Bloc Bienvenue
-            Stack(
-              children: [
-                Container(
 
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: const DecorationImage(
-                      image: AssetImage('assets/images/bg-angola.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-                    child: Container(
-                      height: isSmall ? 160 : 200,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            const Color(0xFFDD1C1A),
-                            const Color(0xFF000000),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                      ),
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Bem-vindo ao Kilumbu 🇦🇴',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: isSmall ? 18 : 22,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Descubra a história, a cultura e os heróis da nossa nação.',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: isSmall ? 13 : 15,
-                                    color: Colors.white70,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          ClipRRect(
-                            // borderRadius: BorderRadius.circular(40),
-                            child: Image.asset(
-                              'assets/images/neto.png',
-                              width: isSmall ? 130 : 300,
-                              height: isSmall ? 130 : 300,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            // 🎉 Bloc Bienvenue
+            const CustomBanner(
+              imagePath: 'assets/images/angola.jpg',
+              title: 'Bem-vindo ao Kilumbu 🇦🇴',
+              subtitle: 'Descubra a história, a cultura e os heróis da nossa nação.',
             ),
+
 
             const SizedBox(height: 30),
 

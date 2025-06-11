@@ -23,7 +23,7 @@ class _LanguePageState extends State<LanguePage> {
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Kilumbu',
-        subtitle: 'Explore a Cultura Angolana',
+        subtitle: 'Línguas',
         actionIcon: Icons.language,
         onActionPressed: null,
         logoAssetPath: 'assets/images/logo/ao-06.png',

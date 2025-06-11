@@ -10,7 +10,7 @@ class BottomFloatingButton extends StatelessWidget {
     super.key,
     required this.onPressed,
     this.label = "Explorar agora",
-    this.buttonText = "Para começar",
+    this.buttonText = "começar",
   });
 
   @override

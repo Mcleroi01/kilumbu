@@ -26,7 +26,7 @@ class _HeroPageState extends State<HeroPage> {
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Kilumbu',
-        subtitle: 'Explore a Cultura Angolana',
+        subtitle: 'Heróis Nacionais',
         actionIcon: Icons.star,
         onActionPressed: null,
         logoAssetPath: 'assets/images/logo/ao-06.png',

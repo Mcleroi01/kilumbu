@@ -74,6 +74,7 @@ class MaisPage extends StatelessWidget {
                   icon: Icons.star_border,
                   title: 'Avaliar o aplicativo',
                   description: 'Deixe a sua opinião na loja',
+
                 ),
               ],
             ),
@@ -142,16 +143,20 @@ class SectionHeader extends StatelessWidget {
   }
 }
 
+
+
 class SectionTile extends StatelessWidget {
   final IconData icon;
   final String title;
   final String description;
+  final VoidCallback? onClick;
 
   const SectionTile({
     super.key,
     required this.icon,
     required this.title,
     required this.description,
+    this.onClick,
   });
 
   @override
@@ -167,9 +172,9 @@ class SectionTile extends StatelessWidget {
         style: GoogleFonts.poppins(fontSize: 10, color: Colors.grey.shade600),
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-      onTap: () {
-        // Navigação ou ação
-      },
+      onTap: onClick,
     );
   }
+
+
 }

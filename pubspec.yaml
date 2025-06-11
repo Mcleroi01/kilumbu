@@ -92,6 +92,24 @@ flutter:
     - assets/images/hero/holden/
     - assets/images/hero/jonas/
     - assets/images/linguas/
+    - assets/images/province/bengo/
+    - assets/images/province/benguela/
+    - assets/images/province/bie/
+    - assets/images/province/cabinda/
+    - assets/images/province/cuando_cubango/
+    - assets/images/province/cuanza_norte/
+    - assets/images/province/cuanza_sul/
+    - assets/images/province/cunene/
+    - assets/images/province/huambo/
+    - assets/images/province/huila/
+    - assets/images/province/luanda/
+    - assets/images/province/lunda_norte/
+    - assets/images/province/lunda_sul/
+    - assets/images/province/malanje/
+    - assets/images/province/moxico/
+    - assets/images/province/namibe/
+    - assets/images/province/uige/
+    - assets/images/province/zaire/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -21,7 +21,7 @@ class _ParquetNaturelPageState extends State<ParquetNaturelPage> {
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Kilumbu',
-        subtitle: 'Explore a Cultura Angolana',
+        subtitle: 'Parques Naturais',
         actionIcon: Icons.eco_outlined,
         onActionPressed: null,
         logoAssetPath: 'assets/images/logo/ao-06.png',
