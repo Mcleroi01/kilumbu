@@ -34,4 +34,47 @@ class ParcNaturel {
     required this.siteWeb,
     required this.imagePrincipale,
   });
+
+  factory ParcNaturel.fromJson(Map<String, dynamic> json) {
+    return ParcNaturel(
+      id: int.parse(json['id'].toString()),
+      nom: json['nom'],
+      description: json['description'],
+      localisation: json['localisation'],
+      superficie: json['superficie'],
+      dateCreation: json['dateCreation'],
+      images: List<String>.from(json['images'] ?? []),
+      especesProtegees: List<String>.from(json['especesProtegees'] ?? []),
+      patrimoineUnesco: json['patrimoineUnesco'] ?? false,
+      climat: json['climat'],
+      typeVegetation: json['typeVegetation'],
+      activitesDisponibles: json['activitesDisponibles'],
+      acces: json['acces'],
+      conseilsVisite: json['conseilsVisite'],
+      siteWeb: json['siteWeb'] ?? '',
+      imagePrincipale: json['imagePrincipale'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nom': nom,
+      'description': description,
+      'localisation': localisation,
+      'superficie': superficie,
+      'dateCreation': dateCreation,
+      'images': images,
+      'especesProtegees': especesProtegees,
+      'patrimoineUnesco': patrimoineUnesco,
+      'climat': climat,
+      'typeVegetation': typeVegetation,
+      'activitesDisponibles': activitesDisponibles,
+      'acces': acces,
+      'conseilsVisite': conseilsVisite,
+      'siteWeb': siteWeb,
+      'imagePrincipale': imagePrincipale,
+    };
+  }
+
 }

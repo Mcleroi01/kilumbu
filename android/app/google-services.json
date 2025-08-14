@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1035771206342",
+    "project_id": "kilumbu-dfb99",
+    "storage_bucket": "kilumbu-dfb99.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035771206342:android:e9b680089f5917846e15c7",
+        "android_client_info": {
+          "package_name": "com.example.sabedoria"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaWV05v8ZuyCRzljiX4iEiLPXNex5QcEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

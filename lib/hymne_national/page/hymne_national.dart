@@ -1,12 +1,10 @@
 import 'dart:ui';
-
 import 'package:Kilumbu/const/appbar.dart';
 import 'package:Kilumbu/const/custom_banner.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:open_filex/open_filex.dart';
-import 'package:flutter/services.dart';
 
 class HymneNationalPage extends StatefulWidget {
   @override
@@ -35,6 +33,7 @@ class _HymneNationalPage extends State<HymneNationalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: const CustomAppBar(
         title: 'Kilumbu',
         subtitle: 'Angola Avante',
@@ -47,20 +46,31 @@ class _HymneNationalPage extends State<HymneNationalPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-
             const CustomBanner(
               imagePath: 'assets/images/angola.jpg',
               title: 'Angola Avante',
-              subtitle: 'Antes da independência, a canção "Angola é Nossa" era utilizada, principalmente pelos portugueses em Angola, como um hino colonial não oficial, mas após o início das negociações de independência já não estava mais em uso.',
+              subtitle:
+              'Antes da independência, a canção "Angola é Nossa" era usada como hino colonial não oficial, mas foi substituída após o início das negociações de independência.',
             ),
 
-            const SizedBox(height: 8),
+            const SizedBox(height: 20),
 
             // 🎼 Hymne complet
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 8,
+                    color: Colors.black.withOpacity(0.05),
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     '''
@@ -89,9 +99,9 @@ Marchando para a vitória final.
 
 Pátria unida, liberdade,
 Um só povo, uma só nação!
-                ''',
-                    style:  GoogleFonts.poppins(fontSize: 14, height: 1.6),
-                    textAlign: TextAlign.justify,
+''',
+                    style: GoogleFonts.poppins(fontSize: 14, height: 1.6),
+
                   ),
                 ],
               ),
@@ -99,51 +109,63 @@ Um só povo, uma só nação!
 
             const SizedBox(height: 20),
 
-            // 🔘 Boutons audio et PDF
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: _toggleAudio,
-                      icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow,color: Colors.white,),
-                      label: Text(isPlaying ? 'Pause' : 'Ovir l\'Hino',style: GoogleFonts.poppins(color: Colors.white),),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.redAccent,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            // 🔘 Boutons
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: _toggleAudio,
+                    icon: Icon(
+                      isPlaying ? Icons.pause : Icons.play_arrow,
+                      color: Colors.white,
+                    ),
+                    label: Text(
+                      isPlaying ? 'Pausar' : 'Ouvir o Hino',
+                      style: GoogleFonts.poppins(
+                          color: Colors.white, fontWeight: FontWeight.w500),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.redAccent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: _openPdf,
-                      icon: const Icon(Icons.picture_as_pdf,color: Colors.black,),
-                      label:  Text('Bachar PDF',style: GoogleFonts.poppins(color:Colors.black ),),
-                      style: OutlinedButton.styleFrom(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: _openPdf,
+                    icon: const Icon(Icons.picture_as_pdf, color: Colors.black),
+                    label: Text(
+                      'Baixar PDF',
+                      style: GoogleFonts.poppins(
+                          color: Colors.black, fontWeight: FontWeight.w500),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
+                      side: const BorderSide(color: Colors.black12),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 24),
 
             // ✍️ Auteurs
-             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '✍️ Letra: Manuel Rui Monteiro\n🎵 Música: Rui Mingas',
-                  style: GoogleFonts.poppins(
-                    fontStyle: FontStyle.italic,
-                    color: Colors.black87,
-                    fontSize: 13,
-                  ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Text(
+                '✍️ Letra: Manuel Rui Monteiro\n🎵 Música: Rui Mingas',
+                style: GoogleFonts.poppins(
+                  fontStyle: FontStyle.italic,
+                  color: Colors.black87,
+                  fontSize: 13,
                 ),
               ),
             ),

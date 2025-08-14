@@ -9,7 +9,7 @@ class FeriadosPage extends StatelessWidget {
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Kilumbu',
-        subtitle: 'Explore a Cultura Angolana',
+        subtitle: 'Feriados',
         actionIcon: Icons.accessibility_new_sharp,
         onActionPressed: null,
         logoAssetPath: 'assets/images/logo/ao-06.png',

@@ -14,10 +14,31 @@ class ParquetNaturelPage extends StatefulWidget {
 
 class _ParquetNaturelPageState extends State<ParquetNaturelPage> {
   final ParcNaturelService parquetNaturelService = ParcNaturelService();
+  List<ParcNaturel> parcnaturels = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadParcs();
+  }
+
+  Future<void> _loadParcs() async {
+    try {
+      final data = await parquetNaturelService.getAllParcs();
+      setState(() {
+        parcnaturels = data;
+        isLoading = false;
+      });
+    } catch (e) {
+      print("Erreur lors du chargement des parcs: $e");
+      setState(() => isLoading = false);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     final isSmall = MediaQuery.of(context).size.width < 600;
-    final List<ParcNaturel> parcnaturels = parquetNaturelService.getParcsNaturels();
+
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Kilumbu',
@@ -26,7 +47,9 @@ class _ParquetNaturelPageState extends State<ParquetNaturelPage> {
         onActionPressed: null,
         logoAssetPath: 'assets/images/logo/ao-06.png',
       ),
-      body: SingleChildScrollView(
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          :SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,7 +115,7 @@ class _ParquetNaturelPageState extends State<ParquetNaturelPage> {
         borderRadius: BorderRadius.circular(12),
         child: Stack(
           children: [
-            Image.asset(
+            Image.network(
               imagePath,
               width: double.infinity,
               height: double.infinity,

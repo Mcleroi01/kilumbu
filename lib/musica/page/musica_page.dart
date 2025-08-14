@@ -9,7 +9,7 @@ class MusicaPage extends StatelessWidget {
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Kilumbu',
-        subtitle: 'Explore a Cultura Angolana',
+        subtitle: 'Música',
         actionIcon: Icons.music_note_outlined,
         onActionPressed: null,
         logoAssetPath: 'assets/images/logo/ao-06.png',

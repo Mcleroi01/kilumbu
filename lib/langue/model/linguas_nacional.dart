@@ -1,16 +1,16 @@
 class LinguaNacional {
-  final int id;
-  final String nome; // Nom de la langue (ex: "Kikongo")
-  final String imageUrl; // Drapeau, carte, ou illustration
-  final String region; // Région(s) principale(s) où la langue est parlée
-  final int locutores; // Nombre estimé de locuteurs
-  final String familiaLinguistica; // Ex: Bantu, Khoisan, etc.
-  final String descricao; // Brève description ou historique
-  final bool reconhecidaOficialmente; // Si reconnue comme langue nationale
-  final List<String> dialectos; // Variantes régionales
-  final List<String> usosCulturais; // Ex: rituels, musique, proverbes…
-  final List<String> iniciativasPreservacao; // Actions de sauvegarde ou promotion
-  final List<String> exemplosFrases; // Petites phrases ou proverbes dans la langue
+  final int id; // On prend l'ID du document Firestore comme String
+  final String nome;
+  final String imageUrl;
+  final String region;
+  final int locutores;
+  final String familiaLinguistica;
+  final String descricao;
+  final bool reconhecidaOficialmente;
+  final List<String> dialectos;
+  final List<String> usosCulturais;
+  final List<String> iniciativasPreservacao;
+  final List<String> exemplosFrases;
   final String urlAula;
 
   LinguaNacional({
@@ -26,6 +26,26 @@ class LinguaNacional {
     required this.usosCulturais,
     required this.iniciativasPreservacao,
     required this.exemplosFrases,
-    required this.urlAula
+    required this.urlAula,
   });
+
+  /// 🔁 Factory pour lire un document Firestore
+  factory LinguaNacional.fromJson(Map<String, dynamic> json, String id) {
+    return LinguaNacional(
+      id: int.parse(json['id'].toString()),
+      nome: json['nome'] ?? '',
+      imageUrl: json['imageUrl'] ?? '',
+      region: json['region'] ?? '',
+      locutores: json['locutores'] ?? 0,
+      familiaLinguistica: json['familiaLinguistica'] ?? '',
+      descricao: json['descricao'] ?? '',
+      reconhecidaOficialmente: json['reconhecidaOficialmente'] ?? false,
+      dialectos: List<String>.from(json['dialectos'] ?? []),
+      usosCulturais: List<String>.from(json['usosCulturais'] ?? []),
+      iniciativasPreservacao: List<String>.from(json['iniciativasPreservacao'] ?? []),
+      exemplosFrases: List<String>.from(json['exemplosFrases'] ?? []),
+      urlAula: json['urlAula'] ?? '',
+    );
+  }
+
 }

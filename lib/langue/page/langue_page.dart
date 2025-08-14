@@ -15,11 +15,32 @@ class LanguePage extends StatefulWidget {
 class _LanguePageState extends State<LanguePage> {
   final LinguaNacionalService service = LinguaNacionalService();
 
+  List<LinguaNacional> _lingua = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPresidents();
+  }
+
+  Future<void> _loadPresidents() async {
+    try {
+      final result = await service.getAllLinguas();
+      setState(() {
+        _lingua = result;
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Erreur : $e');
+      setState(() => _isLoading = false);
+      // Tu peux aussi afficher une alerte si tu veux
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isSmall = MediaQuery.of(context).size.width < 600;
-    final List<LinguaNacional> linguasOficiais = service.getLinguasOficiais();
-
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Kilumbu',
@@ -28,7 +49,9 @@ class _LanguePageState extends State<LanguePage> {
         onActionPressed: null,
         logoAssetPath: 'assets/images/logo/ao-06.png',
       ),
-      body: SingleChildScrollView(
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +82,7 @@ class _LanguePageState extends State<LanguePage> {
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: linguasOficiais.length,
+              itemCount: _lingua.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: isSmall ? 2 : 4,
                 crossAxisSpacing: 12,
@@ -67,14 +90,15 @@ class _LanguePageState extends State<LanguePage> {
                 childAspectRatio: 0.75,
               ),
               itemBuilder: (context, index) {
-                final lingua = linguasOficiais[index];
+                final lingua = _lingua[index];
                 return _themeCard(
                   context,
                   lingua.nome,
                   lingua.imageUrl,
-                  // Tu peux créer une page de détail comme LangueDetailPage(id: lingua.id)
-                  LangueDetailPage(id: lingua.id,)
+                  LangueDetailPage(id: lingua.id),
+                  isOficial: lingua.reconhecidaOficialmente,
                 );
+
               },
             ),
           ],
@@ -83,7 +107,7 @@ class _LanguePageState extends State<LanguePage> {
     );
   }
 
-  Widget _themeCard(BuildContext context, String title, String imagePath, Widget destinationPage) {
+  Widget _themeCard(BuildContext context, String title, String imagePath, Widget destinationPage, {bool isOficial = false}) {
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -96,11 +120,17 @@ class _LanguePageState extends State<LanguePage> {
         borderRadius: BorderRadius.circular(12),
         child: Stack(
           children: [
-            Image.asset(
-              imagePath,
+            Image(
+               image: NetworkImage(imagePath),
+
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Container(
+                color: Colors.grey[300],
+                alignment: Alignment.center,
+                child: const Icon(Icons.broken_image, color: Colors.grey),
+              ),
             ),
             Container(
               decoration: BoxDecoration(
@@ -111,29 +141,30 @@ class _LanguePageState extends State<LanguePage> {
                 ),
               ),
             ),
-            Positioned(
-              bottom: 8,
-              left: 8,
-              right: 8,
-              child: Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                  shadows: [
-                    Shadow(
-                      blurRadius: 4,
-                      color: Colors.black54,
-                      offset: Offset(0, 1),
+            if (isOficial)
+              Positioned(
+                top: 8,
+                left: 8,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: Colors.green[700],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Text(
+                    'Oficial',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),
     );
   }
+
 }

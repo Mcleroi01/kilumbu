@@ -1,28 +1,23 @@
-import 'package:Kilumbu/data/president_data.dart';
-import 'package:Kilumbu/president/model/president.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../model/president.dart';
 
 class PresidentService {
-  List<President> getAllPresident(){
-    return presidentAngolaises;
+  final CollectionReference _collection =
+  FirebaseFirestore.instance.collection('presidents');
+
+  Future<List<President>> getAllPresidents() async {
+    final snapshot = await _collection.orderBy('id').get();
+    return snapshot.docs
+        .map((doc) => President.fromJson(doc.data() as Map<String, dynamic>))
+        .toList();
   }
 
-  President getProvinceById(int id){
-    try {
-      return presidentAngolaises.firstWhere(
-            (province) => province.id == id,
-      );
-    } catch (e) {
-      throw PresidentNotFoundException('Province avec id $id non trouvé');
+  Future<President> getPresidentById(int id) async {
+    final snapshot =
+    await _collection.where('id', isEqualTo: id.toString()).limit(1).get();
+    if (snapshot.docs.isEmpty) {
+      throw Exception('President com id $id não encontrado.');
     }
+    return President.fromJson(snapshot.docs.first.data() as Map<String, dynamic>);
   }
-}
-
-
-class PresidentNotFoundException implements Exception {
-  final String message;
-
-  PresidentNotFoundException(this.message);
-
-  @override
-  String toString() => 'PresidentNotFoundException: $message';
 }

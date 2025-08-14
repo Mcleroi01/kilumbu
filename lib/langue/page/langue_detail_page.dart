@@ -5,23 +5,49 @@ import 'package:Kilumbu/langue/service/linguas_nacional_service.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
-class LangueDetailPage extends StatelessWidget {
+class LangueDetailPage extends StatefulWidget {
   final int id;
 
   const LangueDetailPage({super.key, required this.id});
 
   @override
-  Widget build(BuildContext context) {
-    final LinguaNacionalService service = LinguaNacionalService();
-    final LinguaNacional lingua = service.getLinguaNacionalById(id);
+  State<LangueDetailPage> createState() => _LangueDetailPageState();
+}
 
+class _LangueDetailPageState extends State<LangueDetailPage> {
+  late Future<LinguaNacional> _linguaFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _linguaFuture = LinguaNacionalService().getLinguaById(widget.id);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<LinguaNacional>(
+      future: _linguaFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(body: Center(child: CircularProgressIndicator()));
+        } else if (snapshot.hasError) {
+          return Scaffold(
+            body: Center(child: Text("Erreur: ${snapshot.error}")),
+          );
+        }
+
+        final lingua = snapshot.data!;
+        return _buildDetailPage(context, lingua);
+      },
+    );
+  }
+    Widget _buildDetailPage(BuildContext context, LinguaNacional lingua) {
     return Scaffold(
       body: Stack(
         children: [
           // 🌁 Image de fond floue
           Positioned.fill(
-            child: Image.asset(
+            child: Image.network(
               lingua.imageUrl,
               fit: BoxFit.cover,
             ),
@@ -54,7 +80,7 @@ class LangueDetailPage extends StatelessWidget {
                   background: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.asset(
+                      Image.network(
                         lingua.imageUrl,
                         fit: BoxFit.cover,
                       ),

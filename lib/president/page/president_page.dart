@@ -1,30 +1,47 @@
 import 'dart:ui';
-
-import 'package:Kilumbu/capital/page/capital_page.dart';
 import 'package:Kilumbu/const/appbar.dart';
 import 'package:Kilumbu/const/custom_banner.dart';
-import 'package:Kilumbu/hero/page/hero_page.dart';
-import 'package:Kilumbu/hymne_national/page/hymne_national.dart';
-import 'package:Kilumbu/langue/page/langue_page.dart';
-import 'package:Kilumbu/parque_naturel/page/parque_naturel.dart';
 import 'package:Kilumbu/president/model/president.dart';
 import 'package:Kilumbu/president/page/president_detail_page.dart';
 import 'package:Kilumbu/president/service/president_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PresidentPage extends StatefulWidget{
-  @override
-  State<StatefulWidget> createState() => _PresidentPage();
+class PresidentPage extends StatefulWidget {
+  const PresidentPage({super.key});
 
+  @override
+  State<PresidentPage> createState() => _PresidentPageState();
 }
 
-class _PresidentPage extends State<PresidentPage>{
-  final PresidentService presidentService = PresidentService();
+class _PresidentPageState extends State<PresidentPage> {
+  final PresidentService _presidentService = PresidentService();
+  List<President> _presidents = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPresidents();
+  }
+
+  Future<void> _loadPresidents() async {
+    try {
+      final result = await _presidentService.getAllPresidents();
+      setState(() {
+        _presidents = result;
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Erreur : $e');
+      setState(() => _isLoading = false);
+      // Tu peux aussi afficher une alerte si tu veux
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isSmall = MediaQuery.of(context).size.width < 600;
-    final List<President> presidents = presidentService.getAllPresident();
 
     return Scaffold(
       appBar: const CustomAppBar(
@@ -34,7 +51,9 @@ class _PresidentPage extends State<PresidentPage>{
         onActionPressed: null,
         logoAssetPath: 'assets/images/logo/ao-06.png',
       ),
-      body: SingleChildScrollView(
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +71,7 @@ class _PresidentPage extends State<PresidentPage>{
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: presidents.length,
+              itemCount: _presidents.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: isSmall ? 2 : 4,
                 crossAxisSpacing: 12,
@@ -60,7 +79,7 @@ class _PresidentPage extends State<PresidentPage>{
                 childAspectRatio: 0.75,
               ),
               itemBuilder: (context, index) {
-                final president = presidents[index];
+                final president = _presidents[index];
                 return _themeCard(
                   context,
                   president.nom,
@@ -75,7 +94,6 @@ class _PresidentPage extends State<PresidentPage>{
     );
   }
 
-
   Widget _themeCard(BuildContext context, String title, String imagePath, Widget destinationPage) {
     return InkWell(
       onTap: () {
@@ -89,11 +107,12 @@ class _PresidentPage extends State<PresidentPage>{
         borderRadius: BorderRadius.circular(12),
         child: Stack(
           children: [
-            Image.asset(
+            Image.network(
               imagePath,
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => Container(color: Colors.grey),
             ),
             Container(
               decoration: BoxDecoration(
@@ -110,12 +129,12 @@ class _PresidentPage extends State<PresidentPage>{
               right: 8,
               child: Text(
                 title,
-                style:  GoogleFonts.poppins(
+                style: GoogleFonts.poppins(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                   shadows: [
-                    Shadow(
+                    const Shadow(
                       blurRadius: 4,
                       color: Colors.black54,
                       offset: Offset(0, 1),
@@ -129,6 +148,4 @@ class _PresidentPage extends State<PresidentPage>{
       ),
     );
   }
-
-
 }

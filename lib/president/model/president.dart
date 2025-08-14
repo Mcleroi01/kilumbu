@@ -25,4 +25,36 @@ class President {
     required this.partido,
     required this.religiao
 });
+
+
+  factory President.fromJson(Map<String, dynamic> json) {
+    return President(
+      id: int.parse(json['id'].toString()),
+      nom: json['nom'],
+      dateNais: json['dateNais'],
+      dateMandat: json['dateMandat'],
+      description: json['description'],
+      imagePath: json['imagePath'],
+      photos: List<String>.from(json['photos'] ?? []),
+      profissao: json['profissao'],
+      partido: json['partido'],
+      religiao: json['religiao'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nom': nom,
+      'dateNais': dateNais,
+      'dateMandat': dateMandat,
+      'description': description,
+      'imagePath': imagePath,
+      'photos': photos,
+      'profissao': profissao,
+      'partido': partido,
+      'religiao': religiao,
+    };
+  }
+
 }

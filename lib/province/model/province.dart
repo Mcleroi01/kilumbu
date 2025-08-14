@@ -22,4 +22,21 @@ class Province {
     required this.photos,
     required this.population,
   });
+
+  factory Province.fromJson(Map<String, dynamic> data) {
+    return Province(
+      id: int.parse(data['id'].toString()),
+      nom: data['nom'] ?? 'Indisponível',
+      capitale: data['capitale'] ?? 'Indisponível',
+      superficie: data['superficie']?.toString() ?? 'Desconhecida',
+      climat: data['climat'] ?? 'Desconhecido',
+      description: data['description'] ?? '',
+      imagePath: data['imagePath'] ?? '',
+      mapPath: data['mapPath'] ?? '',
+      photos: List<String>.from(data['photos'] ?? []),
+      population: data['population']?.toString() ?? 'Desconhecida',
+    );
+  }
+
+
 }

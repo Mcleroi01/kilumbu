@@ -1,32 +1,58 @@
 import 'dart:ui';
-
-import 'package:Kilumbu/const/appbar.dart';
-import 'package:Kilumbu/data/president_data.dart';
-import 'package:Kilumbu/president/model/president.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../model/president.dart';
+import '../service/president_service.dart';
 
-class PresidentDetailPage extends StatelessWidget {
+class PresidentDetailPage extends StatefulWidget {
   final int id;
 
   const PresidentDetailPage({super.key, required this.id});
 
   @override
+  State<PresidentDetailPage> createState() => _PresidentDetailPageState();
+}
+
+class _PresidentDetailPageState extends State<PresidentDetailPage> {
+  President? president;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPresident();
+  }
+
+  Future<void> _loadPresident() async {
+    try {
+      final fetched = await PresidentService().getPresidentById(widget.id);
+      setState(() {
+        president = fetched;
+        isLoading = false;
+      });
+    } catch (e) {
+      print("Erreur: $e");
+      Navigator.pop(context);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final President president =
-    presidentAngolaises.firstWhere((p) => p.id == id);
+    if (isLoading || president == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
 
     return Scaffold(
       body: Stack(
         children: [
-          // 🌁 Image de fond
           Positioned.fill(
-            child: Image.asset(
-              president.imagePath,
+            child: Image.network(
+              president!.imagePath,
               fit: BoxFit.cover,
             ),
           ),
-          // Effet flou
           Positioned.fill(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
@@ -34,10 +60,8 @@ class PresidentDetailPage extends StatelessWidget {
             ),
           ),
 
-          // 📜 Contenu scrollable
           CustomScrollView(
             slivers: [
-              // 🔽 AppBar flexible
               SliverAppBar(
                 expandedHeight: 380,
                 pinned: true,
@@ -45,19 +69,19 @@ class PresidentDetailPage extends StatelessWidget {
                 elevation: 0,
                 leading: const BackButton(color: Colors.white),
                 title: Text(
-                  president.nom,
-                  style:  GoogleFonts.poppins(
+                  president!.nom,
+                  style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    shadows: [Shadow(blurRadius: 6, color: Colors.black45)],
+                    shadows: [const Shadow(blurRadius: 6, color: Colors.black45)],
                   ),
                 ),
                 flexibleSpace: FlexibleSpaceBar(
                   background: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.asset(
-                        president.imagePath,
+                      Image.network(
+                        president!.imagePath,
                         fit: BoxFit.cover,
                       ),
                       Container(color: Colors.black.withOpacity(0.3)),
@@ -78,113 +102,102 @@ class PresidentDetailPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Titre
                         Text(
-                          president.nom,
+                          president!.nom,
                           style: GoogleFonts.poppins(
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
                           ),
                         ),
                         Text(
-                          president.profissao,
-                          style:  GoogleFonts.poppins(
-                            fontWeight: FontWeight.normal,
+                          president!.profissao,
+                          style: GoogleFonts.poppins(
                             fontSize: 16,
                             color: Colors.grey,
                           ),
                         ),
                         const SizedBox(height: 12),
 
-
-                        // Onglets
-                        TabBar(
-                          labelColor: const Color(0xFFDD1C1A),
+                        const TabBar(
+                          labelColor: Color(0xFFDD1C1A),
                           unselectedLabelColor: Colors.grey,
-                          indicatorColor: const Color(0xFFDD1C1A),
-                          labelStyle: const TextStyle(fontWeight: FontWeight.bold),
-                          tabs: const [
+                          indicatorColor: Color(0xFFDD1C1A),
+                          labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                          tabs: [
                             Tab(text: "Visão geral"),
                             Tab(text: "Detalhes"),
-                            Tab(text: "Avis"),
+                            Tab(text: "Comentários"),
                           ],
                         ),
 
                         const SizedBox(height: 16),
 
-                        // Contenu des tabs
                         SizedBox(
-                          height: 500, // adapte selon ta mise en page
+                          height: 500,
                           child: TabBarView(
                             children: [
-                              // Aperçu
-                              Text(
-                                president.description,
-                                style:  GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w200,
-                                  fontSize: 13,
-                                  color: Colors.grey,
-                                  height: 1.4,
+                              SingleChildScrollView(
+                                child: Text(
+                                  president!.description,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 13,
+                                    color: Colors.grey,
+                                    height: 1.4,
+                                  ),
                                 ),
                               ),
 
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  _buildInfoRow(Icons.person, president.nom),
-                                  _buildInfoRow(Icons.cake, president.dateNais),
-                                  _buildInfoRow(Icons.flag, president.dateMandat),
-                                  _buildInfoRow(Icons.work, president.profissao),
-                                  _buildInfoRow(Icons.account_balance, president.partido),
-                                  _buildInfoRow(Icons.self_improvement, president.religiao),
-
+                                  _buildInfoRow(Icons.person, president!.nom),
+                                  _buildInfoRow(Icons.cake, president!.dateNais),
+                                  _buildInfoRow(Icons.flag, president!.dateMandat),
+                                  _buildInfoRow(Icons.work, president!.profissao),
+                                  _buildInfoRow(Icons.account_balance, president!.partido),
+                                  _buildInfoRow(Icons.self_improvement, president!.religiao),
                                   const SizedBox(height: 16),
 
-                                  SizedBox(
-                                    height: 140,
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: president.photos.length,
-                                      itemBuilder: (context, index) {
-                                        return Card(
-                                          elevation: 4,
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                          margin: const EdgeInsets.only(right: 12),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(12),
-                                            child: Image.asset(
-                                              president.photos[index],
-                                              width: 160,
-                                              height: 140,
-                                              fit: BoxFit.cover,
+                                  if (president!.photos.isNotEmpty)
+                                    SizedBox(
+                                      height: 140,
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: president!.photos.length,
+                                        itemBuilder: (context, index) {
+                                          return Card(
+                                            elevation: 4,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(12),
                                             ),
-                                          ),
-                                        );
-                                      },
+                                            margin: const EdgeInsets.only(right: 12),
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(12),
+                                              child: Image.network(
+                                                president!.photos[index],
+                                                width: 160,
+                                                height: 140,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
                                     ),
-                                  ),
                                 ],
                               ),
 
-
-
-
-                              // Avis
-                              const Center(child: Text("Aucun avis pour le moment.")),
+                              const Center(child: Text("Nenhum comentário disponível.")),
                             ],
                           ),
-                        ),
-
+                        )
                       ],
                     ),
                   ),
                 ),
               ),
-
             ],
           ),
-
-
         ],
       ),
     );
@@ -202,11 +215,7 @@ class PresidentDetailPage extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             padding: const EdgeInsets.all(6),
-            child: Icon(
-              icon,
-              size: 18,
-              color: Colors.blueGrey,
-            ),
+            child: Icon(icon, size: 18, color: Colors.blueGrey),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -214,7 +223,6 @@ class PresidentDetailPage extends StatelessWidget {
               value,
               style: GoogleFonts.poppins(
                 fontSize: 14,
-                fontWeight: FontWeight.w400,
                 color: Colors.black87,
                 height: 1.5,
               ),
@@ -224,6 +232,4 @@ class PresidentDetailPage extends StatelessWidget {
       ),
     );
   }
-
-
 }

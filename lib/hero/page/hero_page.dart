@@ -1,8 +1,6 @@
 import 'dart:ui';
-
 import 'package:Kilumbu/const/appbar.dart';
 import 'package:Kilumbu/const/custom_banner.dart';
-import 'package:Kilumbu/data/heroi_nacionai_data.dart';
 import 'package:Kilumbu/hero/model/heroi_nacional.dart';
 import 'package:Kilumbu/hero/page/hero_nacional_detail_page.dart';
 import 'package:Kilumbu/hero/service/heroi_nacioanal_service.dart';
@@ -17,12 +15,37 @@ class HeroPage extends StatefulWidget {
 class _HeroPageState extends State<HeroPage> {
   final HeroiNacionalService heroiNacionalService = HeroiNacionalService();
 
+  List<HeroiNacional> heroisOficiais = [];
+  List<HeroiNacional> heroisNaoOficiais = [];
+
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadHerois();
+  }
+
+  Future<void> _loadHerois() async {
+    try {
+      final oficiais = await heroiNacionalService.getAllHerois(reconhecidoOficialmente: true);
+      final naoOficiais = await heroiNacionalService.getAllHerois(reconhecidoOficialmente: false);
+
+      setState(() {
+        heroisOficiais = oficiais;
+        heroisNaoOficiais = naoOficiais;
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Erreur de chargement des héros: $e');
+      setState(() => _isLoading = false);
+    }
+  }
+
   @override
 
   Widget build(BuildContext context) {
     final isSmall = MediaQuery.of(context).size.width < 600;
-    final List<HeroiNacional> heros = heroiNacionalService.getHeroisNacionais();
-    final List<HeroiNacional> heroisOficiais = heroiNacionalService.getHeroisOficiais();
     return Scaffold(
       appBar: const CustomAppBar(
         title: 'Kilumbu',
@@ -31,7 +54,9 @@ class _HeroPageState extends State<HeroPage> {
         onActionPressed: null,
         logoAssetPath: 'assets/images/logo/ao-06.png',
       ),
-      body:SingleChildScrollView(
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          :SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,7 +141,7 @@ class _HeroPageState extends State<HeroPage> {
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: heros.length,
+              itemCount: heroisNaoOficiais.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: isSmall ? 2 : 4,
                 crossAxisSpacing: 12,
@@ -124,7 +149,7 @@ class _HeroPageState extends State<HeroPage> {
                 childAspectRatio: 0.75,
               ),
               itemBuilder: (context, index) {
-                final hero = heros[index];
+                final hero = heroisNaoOficiais[index];
                 return _themeCard(
                   context,
                   hero.nome,
@@ -155,7 +180,14 @@ class _HeroPageState extends State<HeroPage> {
           borderRadius: BorderRadius.circular(12),
           child: Stack(
             children: [
-              Image.asset(
+              imagePath.startsWith('http')
+                  ? Image.network(
+                imagePath,
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.cover,
+              )
+                  : Image.asset(
                 imagePath,
                 width: double.infinity,
                 height: double.infinity,

@@ -1,28 +1,65 @@
 import 'dart:ui';
 import 'package:Kilumbu/hero/model/heroi_nacional.dart';
 import 'package:Kilumbu/hero/service/heroi_nacioanal_service.dart';
-import 'package:Kilumbu/parque_naturel/model/parcnaturel.dart';
-import 'package:Kilumbu/parque_naturel/service/parc_naturel_service.dart';
 import 'package:flutter/material.dart';
-import 'package:Kilumbu/province/model/province.dart';
-import 'package:Kilumbu/province/service/province_service.dart';
 
-class HeroNacionalDetailPage extends StatelessWidget {
+
+class HeroNacionalDetailPage extends StatefulWidget {
   final int id;
 
   const HeroNacionalDetailPage({super.key, required this.id});
 
   @override
+  State<HeroNacionalDetailPage> createState() => _HeroNacionalDetailPageState();
+}
+
+
+class _HeroNacionalDetailPageState extends State<HeroNacionalDetailPage> {
+  final HeroiNacionalService _service = HeroiNacionalService();
+  HeroiNacional? _heroi;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadHeroi();
+  }
+
+  Future<void> _loadHeroi() async {
+    try {
+      final heroi = await _service.getHeroiById(widget.id);
+      setState(() {
+        _heroi = heroi;
+        _isLoading = false;
+      });
+    } catch (e) {
+      print("Erreur : $e");
+      setState(() => _isLoading = false);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final HeroiNacionalService service = HeroiNacionalService();
-    final HeroiNacional hero = service.getHeroiNacionalById(id);
+    if (_isLoading) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (_heroi == null) {
+      return const Scaffold(
+        body: Center(child: Text("Héroi não encontrado")),
+      );
+    }
+
+    final hero = _heroi!;
 
     return Scaffold(
       body: Stack(
         children: [
           // 🌁 Image de fond
           Positioned.fill(
-            child: Image.asset(
+            child: Image.network(
               hero.imageUrl,
               fit: BoxFit.cover,
             ),
@@ -57,7 +94,7 @@ class HeroNacionalDetailPage extends StatelessWidget {
                   background: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.asset(
+                      Image.network(
                         hero.imageUrl,
                         fit: BoxFit.cover,
                       ),
@@ -105,9 +142,9 @@ class HeroNacionalDetailPage extends StatelessWidget {
                           indicatorColor: const Color(0xFFDD1C1A),
                           labelStyle: const TextStyle(fontWeight: FontWeight.bold),
                           tabs: const [
-                            Tab(text: "Aperçu"),
-                            Tab(text: "Détail"),
-                            Tab(text: "Avis"),
+                            Tab(text: "Visão geral"),
+                            Tab(text: "Detalhes"),
+                            Tab(text: "Comentários"),
                           ],
                         ),
 
