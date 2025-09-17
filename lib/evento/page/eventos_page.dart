@@ -6,7 +6,7 @@ import '../model/evento.dart';
 import '../service/evento_service.dart';
 
 class EventosPage extends StatefulWidget {
-  const EventosPage({Key? key}) : super(key: key);
+  const EventosPage({super.key});
 
   @override
   _EventosPageState createState() => _EventosPageState();
@@ -408,9 +408,9 @@ class _EventosPageState extends State<EventosPage> with SingleTickerProviderStat
                           )
                         else if (evento.ingressos.isNotEmpty)
                           Chip(
-                            label: Text(
+                            label: const Text(
                               'A partir de R\${{...evento.ingressos.map((e) => e.preco)}.reduce((a, b) => a < b ? a : b).toStringAsFixed(2)}',
-                              style: const TextStyle(fontSize: 10),
+                              style: TextStyle(fontSize: 10),
                             ),
                             backgroundColor: Colors.orange[50],
                             padding: EdgeInsets.zero,
@@ -463,9 +463,9 @@ class _EventosPageState extends State<EventosPage> with SingleTickerProviderStat
                   )
                 else if (evento.ingressos.isNotEmpty)
                   Chip(
-                    label: Text(
+                    label: const Text(
                       'A partir de R\${{...evento.ingressos.map((e) => e.preco)}.reduce((a, b) => a < b ? a : b).toStringAsFixed(2)}',
-                      style: const TextStyle(fontSize: 12),
+                      style: TextStyle(fontSize: 12),
                     ),
                     backgroundColor: Colors.orange[100],
                   ),

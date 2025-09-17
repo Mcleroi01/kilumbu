@@ -7,7 +7,7 @@ import '../service/province_service.dart';
 import '../model/province.dart';
 
 class ProvincesPage extends StatefulWidget {
-  const ProvincesPage({Key? key}) : super(key: key);
+  const ProvincesPage({super.key});
 
   @override
   State<ProvincesPage> createState() => _ProvincesPageState();
@@ -36,7 +36,7 @@ class _ProvincesPageState extends State<ProvincesPage> {
       print('Erreur de chargement des provinces: $e');
       setState(() => isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erro ao carregar províncias')),
+        const SnackBar(content: Text('Erro ao carregar províncias')),
       );
     }
   }

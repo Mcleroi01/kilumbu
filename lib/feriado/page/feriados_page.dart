@@ -5,7 +5,7 @@ import '../model/feriado.dart';
 import '../service/feriado_service.dart';
 
 class FeriadosPage extends StatefulWidget {
-  const FeriadosPage({Key? key}) : super(key: key);
+  const FeriadosPage({super.key});
 
   @override
   _FeriadosPageState createState() => _FeriadosPageState();

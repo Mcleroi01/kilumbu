@@ -166,7 +166,7 @@ class EventoService {
       // First search by title
       final titleSnapshot = await _collection
           .where('titulo', isGreaterThanOrEqualTo: query)
-          .where('titulo', isLessThanOrEqualTo: query + '\uf8ff')
+          .where('titulo', isLessThanOrEqualTo: '$query\uf8ff')
           .where('ativo', isEqualTo: true)
           .orderBy('titulo')
           .get();
@@ -174,7 +174,7 @@ class EventoService {
       // Then search by description
       final descSnapshot = await _collection
           .where('descricao', isGreaterThanOrEqualTo: query)
-          .where('descricao', isLessThanOrEqualTo: query + '\uf8ff')
+          .where('descricao', isLessThanOrEqualTo: '$query\uf8ff')
           .where('ativo', isEqualTo: true)
           .orderBy('descricao')
           .get();

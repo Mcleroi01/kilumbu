@@ -1,7 +1,5 @@
-import 'package:Kilumbu/province/page/province_detail_page.dart';
 import 'package:Kilumbu/province/page/provinces_page.dart';
 import 'package:flutter/material.dart';
-import 'package:Kilumbu/home.dart';
 import 'package:Kilumbu/main_navigation_page.dart';
 
 class SabedoriaApp extends StatelessWidget {

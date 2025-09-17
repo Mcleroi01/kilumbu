@@ -5,10 +5,10 @@ class CustomBottomBar extends StatelessWidget {
   final ValueChanged<int> onTap;
 
   const CustomBottomBar({
-    Key? key,
+    super.key,
     required this.currentIndex,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class CustomBottomBar extends StatelessWidget {
       backgroundColor: Colors.white.withOpacity(0.8),
       elevation: 8,
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: Color(0xFFDD1C1A),
+      selectedItemColor: const Color(0xFFDD1C1A),
       unselectedItemColor: Colors.grey[600],
       selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
       items: const [

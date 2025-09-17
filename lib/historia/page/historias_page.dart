@@ -4,7 +4,7 @@ import '../service/historia_service.dart';
 import 'package:Kilumbu/const/appbar.dart';
 
 class HistoriasPage extends StatefulWidget {
-  const HistoriasPage({Key? key}) : super(key: key);
+  const HistoriasPage({super.key});
 
   @override
   _HistoriasPageState createState() => _HistoriasPageState();

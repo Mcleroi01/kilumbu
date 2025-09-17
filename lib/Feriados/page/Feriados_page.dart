@@ -6,15 +6,15 @@ class FeriadosPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(
+    return const Scaffold(
+      appBar: CustomAppBar(
         title: 'Kilumbu',
         subtitle: 'Feriados',
         actionIcon: Icons.accessibility_new_sharp,
         onActionPressed: null,
         logoAssetPath: 'assets/images/logo/ao-06.png',
       ),
-      body: const Center(
+      body: Center(
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(

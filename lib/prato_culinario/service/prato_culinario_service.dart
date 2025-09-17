@@ -71,7 +71,7 @@ class PratoCulinarioService {
     try {
       final snapshot = await _collection
           .where('nome', isGreaterThanOrEqualTo: query)
-          .where('nome', isLessThanOrEqualTo: query + '\uf8ff')
+          .where('nome', isLessThanOrEqualTo: '$query\uf8ff')
           .get();
           
       return snapshot.docs.map((doc) {

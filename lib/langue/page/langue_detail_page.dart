@@ -264,11 +264,11 @@ class _LangueDetailPageState extends State<LangueDetailPage> {
   }
 
 
-  Future<void> _launchInUrl(Uri _monUrl) async {
-    print(_monUrl);
+  Future<void> _launchInUrl(Uri monUrl) async {
+    print(monUrl);
     try {
-      if (!await launchUrl(_monUrl)) {
-        throw Exception('Could not launch $_monUrl');
+      if (!await launchUrl(monUrl)) {
+        throw Exception('Could not launch $monUrl');
       }
     } catch (e) {
       print(e.toString());
@@ -313,7 +313,7 @@ class _LangueDetailPageState extends State<LangueDetailPage> {
       final rest = paragraph.substring(1);
       return TextSpan(
         children: [
-          WidgetSpan(child: SizedBox(height: 16)),
+          const WidgetSpan(child: SizedBox(height: 16)),
           TextSpan(
             text: firstLetter,
             style: const TextStyle(
@@ -322,7 +322,7 @@ class _LangueDetailPageState extends State<LangueDetailPage> {
               height: 1.5,
             ),
           ),
-          TextSpan(text: rest + '\n\n'),
+          TextSpan(text: '$rest\n\n'),
         ],
       );
     }).toList();

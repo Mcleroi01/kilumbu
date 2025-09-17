@@ -34,11 +34,11 @@ class _ParcNaturelDetailPageState extends State<ParcNaturelDetailPage> {
             body: Center(child: CircularProgressIndicator()),
           );
         } else if (snapshot.hasError) {
-          return Scaffold(
+          return const Scaffold(
             body: Center(child: Text("Erro ao carregar o parque.")),
           );
         } else if (!snapshot.hasData) {
-          return Scaffold(
+          return const Scaffold(
             body: Center(child: Text("Parque não encontrado.")),
           );
         }

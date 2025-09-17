@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:Kilumbu/const/appbar.dart';
 import 'package:Kilumbu/const/custom_banner.dart';
 import 'package:Kilumbu/president/model/president.dart';

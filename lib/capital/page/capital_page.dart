@@ -1,10 +1,11 @@
 import 'dart:ui';
 import 'package:Kilumbu/const/bottom_floating_button.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:Kilumbu/const/appbar.dart';
 import 'package:flutter/material.dart';
 
 class CapitalPage extends StatefulWidget {
+  const CapitalPage({super.key});
+
   @override
   State<CapitalPage> createState() => _CapitalPageState();
 }
@@ -12,7 +13,7 @@ class CapitalPage extends StatefulWidget {
 class _CapitalPageState extends State<CapitalPage> {
   @override
   Widget build(BuildContext context) {
-    final String luandaDescription ='''
+    const String luandaDescription ='''
 Luanda é a capital e a maior cidade de Angola. Localizada na costa atlântica do país, Luanda é um importante centro político, econômico e cultural. Fundada pelos portugueses em 1576, é uma cidade histórica com uma mistura vibrante de arquitetura colonial e moderna.
 
 A cidade abriga instituições governamentais, museus, universidades e uma das economias urbanas mais dinâmicas de África. O seu porto é um dos mais movimentados da região e desempenha um papel essencial no comércio angolano.
@@ -53,7 +54,7 @@ Luanda é também conhecida pela sua baía deslumbrante, praias como a Ilha do M
                   style:  GoogleFonts.poppins(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    shadows: [Shadow(blurRadius: 6, color: Colors.black45)],
+                    shadows: [const Shadow(blurRadius: 6, color: Colors.black45)],
                   ),
                 ),
                 flexibleSpace: FlexibleSpaceBar(
@@ -114,12 +115,12 @@ Luanda é também conhecida pela sua baía deslumbrante, praias como a Ilha do M
                         const SizedBox(height: 24),
 
                         // Onglets
-                        TabBar(
-                          labelColor: const Color(0xFFDD1C1A),
+                        const TabBar(
+                          labelColor: Color(0xFFDD1C1A),
                           unselectedLabelColor: Colors.grey,
-                          indicatorColor: const Color(0xFFDD1C1A),
-                          labelStyle: const TextStyle(fontWeight: FontWeight.bold),
-                          tabs: const [
+                          indicatorColor: Color(0xFFDD1C1A),
+                          labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                          tabs: [
                             Tab(text: "Visão geral"),
                             Tab(text: "Detalhes"),
                             Tab(text: "Locais a Visitar"),
@@ -306,7 +307,7 @@ Luanda é também conhecida pela sua baía deslumbrante, praias como a Ilha do M
   _action(){
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) =>  CapitalPage()),
+      MaterialPageRoute(builder: (context) =>  const CapitalPage()),
     );
   }
 }

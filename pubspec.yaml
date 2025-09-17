@@ -77,11 +77,8 @@ flutter:
   assets:
     - assets/images/logo/
     - assets/images/
-    - assets/images/province/maps/
-    - assets/images/province/
     - assets/files/
     - assets/audio/
-    - assets/images/presidents/
     - assets/images/dev.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see

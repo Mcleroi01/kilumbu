@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:Kilumbu/Feriados/page/Feriados_page.dart';
 import 'package:Kilumbu/capital/page/capital_page.dart';
 import 'package:Kilumbu/const/appbar.dart';
@@ -61,12 +60,12 @@ class _HomePageState extends State<HomePage> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  _categoryChip(  context,Icons.history_edu, 'História',HistoirePage()),
-                  _categoryChip(  context,Icons.music_note, 'Música',MusicaPage()),
-                  _categoryChip(  context,Icons.emoji_people, 'Herói',HeroPage()),
-                  _categoryChip(  context,Icons.restaurant_menu, 'Cozinha',CozinhaPage()),
-                  _categoryChip(  context,Icons.festival, 'Feriados',FeriadosPage()),
-                  _categoryChip(  context,Icons.map, 'Províncias',ProvincesPage()),
+                  _categoryChip(  context,Icons.history_edu, 'História',const HistoirePage()),
+                  _categoryChip(  context,Icons.music_note, 'Música',const MusicaPage()),
+                  _categoryChip(  context,Icons.emoji_people, 'Herói',const HeroPage()),
+                  _categoryChip(  context,Icons.restaurant_menu, 'Cozinha',const CozinhaPage()),
+                  _categoryChip(  context,Icons.festival, 'Feriados',const FeriadosPage()),
+                  _categoryChip(  context,Icons.map, 'Províncias',const ProvincesPage()),
                 ],
               ),
             ),
@@ -92,13 +91,13 @@ class _HomePageState extends State<HomePage> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    _themeCard(context,'Hino Nacional', 'assets/images/hymne.jpg',HymneNationalPage()),
-                    _themeCard(context,'Capitais', 'assets/images/capital.jpg',CapitalPage()),
-                    _themeCard(context,'Parques Naturais', 'assets/images/parc.jpg',ParquetNaturelPage()),
-                    _themeCard(context,'Heróis Nacionais', 'assets/images/heroi.jpg',HeroPage()),
+                    _themeCard(context,'Hino Nacional', 'assets/images/hymne.jpg',const HymneNationalPage()),
+                    _themeCard(context,'Capitais', 'assets/images/capital.jpg',const CapitalPage()),
+                    _themeCard(context,'Parques Naturais', 'assets/images/parc.jpg',const ParquetNaturelPage()),
+                    _themeCard(context,'Heróis Nacionais', 'assets/images/heroi.jpg',const HeroPage()),
                     _themeCard(
-                        context,'Línguas Nacionais', 'assets/images/langues.jpg',LanguePage()),
-                    _themeCard(context,'Províncias', 'assets/images/provinces.jpg',ProvincesPage()),
+                        context,'Línguas Nacionais', 'assets/images/langues.jpg',const LanguePage()),
+                    _themeCard(context,'Províncias', 'assets/images/provinces.jpg',const ProvincesPage()),
                   ],
                 ),
               ],
@@ -229,7 +228,7 @@ class _HomePageState extends State<HomePage> {
               label,
               style:  GoogleFonts.poppins(
                 fontSize: 12,
-                color: Color(0xFF000000),
+                color: const Color(0xFF000000),
               ),
             ),
           ],
@@ -278,7 +277,7 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                   shadows: [
-                    Shadow(
+                    const Shadow(
                       blurRadius: 4,
                       color: Colors.black54,
                       offset: Offset(0, 1),
@@ -337,7 +336,7 @@ class _HomePageState extends State<HomePage> {
                 '"${adage['quote']}"',
                 style:  GoogleFonts.poppins(
                   fontSize: 20,
-                  color: Color(0xFF000000),
+                  color: const Color(0xFF000000),
                   fontStyle: FontStyle.italic,
                 ),
               ),
@@ -347,7 +346,7 @@ class _HomePageState extends State<HomePage> {
                 style:  GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w100,
-                  color: Color(0xFF000000),
+                  color: const Color(0xFF000000),
                 ),
               ),
             ],

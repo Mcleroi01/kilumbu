@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:Kilumbu/const/appbar.dart';
 import 'package:Kilumbu/const/custom_banner.dart';
@@ -8,6 +7,8 @@ import 'package:Kilumbu/langue/service/linguas_nacional_service.dart';
 import 'package:flutter/material.dart';
 
 class LanguePage extends StatefulWidget {
+  const LanguePage({super.key});
+
   @override
   State<LanguePage> createState() => _LanguePageState();
 }

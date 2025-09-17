@@ -4,7 +4,7 @@ import '../service/prato_culinario_service.dart';
 import 'package:Kilumbu/const/appbar.dart';
 
 class PratosPage extends StatefulWidget {
-  const PratosPage({Key? key}) : super(key: key);
+  const PratosPage({super.key});
 
   @override
   _PratosPageState createState() => _PratosPageState();

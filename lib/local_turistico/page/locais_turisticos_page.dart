@@ -6,7 +6,7 @@ import '../model/local_turistico.dart';
 import '../service/local_turistico_service.dart';
 
 class LocaisTuristicosPage extends StatefulWidget {
-  const LocaisTuristicosPage({Key? key}) : super(key: key);
+  const LocaisTuristicosPage({super.key});
 
   @override
   _LocaisTuristicosPageState createState() => _LocaisTuristicosPageState();

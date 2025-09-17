@@ -172,7 +172,7 @@ class MaisPage extends StatelessWidget {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               radius: 30,
               backgroundImage: AssetImage('assets/images/dev.jpg'),
             ),
@@ -225,15 +225,15 @@ class MaisPage extends StatelessWidget {
                 ),
               ],
             ),
-            child: Column(
+            child: const Column(
               children: [
-                const SectionTile(
+                SectionTile(
                   icon: Icons.location_on_outlined,
                   title: 'Locais turísticos',
                   description: 'Descubra pontos de interesse em Angola',
                 ),
-                const Divider(height: 1, thickness: 0.5, indent: 16, endIndent: 16),
-                const SectionTile(
+                Divider(height: 1, thickness: 0.5, indent: 16, endIndent: 16),
+                SectionTile(
                   icon: Icons.event_note_outlined,
                   title: 'Eventos',
                   description: 'Veja o que está a acontecer perto de si',

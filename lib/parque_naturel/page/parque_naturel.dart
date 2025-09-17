@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:Kilumbu/const/appbar.dart';
 import 'package:Kilumbu/const/custom_banner.dart';
 import 'package:Kilumbu/parque_naturel/model/parcnaturel.dart';
@@ -8,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ParquetNaturelPage extends StatefulWidget {
+  const ParquetNaturelPage({super.key});
+
   @override
   State<ParquetNaturelPage> createState() => _ParquetNaturelPageState();
 }
@@ -54,7 +55,7 @@ class _ParquetNaturelPageState extends State<ParquetNaturelPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomBanner(
+            const CustomBanner(
               imagePath: 'assets/images/angola.jpg',
               title: 'Parques Naturais de Angola',
               subtitle: 'Explore as belezas naturais e a biodiversidade do país.',
@@ -141,7 +142,7 @@ class _ParquetNaturelPageState extends State<ParquetNaturelPage> {
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                   shadows: [
-                    Shadow(
+                    const Shadow(
                       blurRadius: 4,
                       color: Colors.black54,
                       offset: Offset(0, 1),

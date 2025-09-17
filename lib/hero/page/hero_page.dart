@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:Kilumbu/const/appbar.dart';
 import 'package:Kilumbu/const/custom_banner.dart';
 import 'package:Kilumbu/hero/model/heroi_nacional.dart';
@@ -8,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HeroPage extends StatefulWidget {
+  const HeroPage({super.key});
+
   @override
   State<HeroPage> createState() => _HeroPageState();
 }
@@ -173,7 +174,7 @@ class _HeroPageState extends State<HeroPage> {
         );
       },
       borderRadius: BorderRadius.circular(12),
-      child: Container(
+      child: SizedBox(
         width: width ?? double.infinity,
         height: 260,
         child: ClipRRect(
@@ -213,7 +214,7 @@ class _HeroPageState extends State<HeroPage> {
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                     shadows: [
-                      Shadow(
+                      const Shadow(
                         blurRadius: 4,
                         color: Colors.black54,
                         offset: Offset(0, 1),

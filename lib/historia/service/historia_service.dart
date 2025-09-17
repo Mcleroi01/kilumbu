@@ -71,7 +71,7 @@ class HistoriaService {
     try {
       final snapshot = await _collection
           .where('titulo', isGreaterThanOrEqualTo: query)
-          .where('titulo', isLessThanOrEqualTo: query + '\uf8ff')
+          .where('titulo', isLessThanOrEqualTo: '$query\uf8ff')
           .get();
           
       return snapshot.docs.map((doc) {

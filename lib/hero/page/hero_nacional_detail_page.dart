@@ -136,12 +136,12 @@ class _HeroNacionalDetailPageState extends State<HeroNacionalDetailPage> {
 
 
                         // Onglets
-                        TabBar(
-                          labelColor: const Color(0xFFDD1C1A),
+                        const TabBar(
+                          labelColor: Color(0xFFDD1C1A),
                           unselectedLabelColor: Colors.grey,
-                          indicatorColor: const Color(0xFFDD1C1A),
-                          labelStyle: const TextStyle(fontWeight: FontWeight.bold),
-                          tabs: const [
+                          indicatorColor: Color(0xFFDD1C1A),
+                          labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                          tabs: [
                             Tab(text: "Visão geral"),
                             Tab(text: "Detalhes"),
                             Tab(text: "Comentários"),
@@ -254,7 +254,7 @@ class _HeroNacionalDetailPageState extends State<HeroNacionalDetailPage> {
       final rest = paragraph.substring(1);
       return TextSpan(
         children: [
-          WidgetSpan(child: SizedBox(height: 16)),
+          const WidgetSpan(child: SizedBox(height: 16)),
           TextSpan(
             text: firstLetter,
             style: const TextStyle(
@@ -263,7 +263,7 @@ class _HeroNacionalDetailPageState extends State<HeroNacionalDetailPage> {
               height: 1.5,
             ),
           ),
-          TextSpan(text: rest + '\n\n'),
+          TextSpan(text: '$rest\n\n'),
         ],
       );
     }).toList();
